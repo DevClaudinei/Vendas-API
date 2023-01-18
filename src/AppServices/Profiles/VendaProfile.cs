@@ -2,9 +2,9 @@
 using AutoMapper;
 using DomainModels.Entities;
 
-public class CustomerProfile : Profile
+public class VendaProfile : Profile
 {
-    public CustomerProfile()
+    public VendaProfile()
     {
         CreateMap<Venda, VendaResult>()
             .ForMember(x => x.IdVenda, opts => opts.MapFrom(source => source.Id));

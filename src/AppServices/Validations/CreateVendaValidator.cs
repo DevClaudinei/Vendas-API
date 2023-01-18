@@ -1,5 +1,4 @@
 ﻿using Application.Models;
-using DomainModels.Enums;
 using FluentValidation;
 
 namespace AppServices.Validations;

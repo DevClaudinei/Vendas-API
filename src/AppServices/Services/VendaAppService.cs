@@ -1,11 +1,12 @@
 ﻿using Application.Models;
+using AppServices.Services.Interfaces;
 using AutoMapper;
 using DomainModels.Entities;
 using DomainServices.Exceptions;
 using DomainServices.Interfaces;
 using System;
 
-namespace AppServices;
+namespace AppServices.Services;
 
 public class VendaAppService : IVendaAppService
 {
@@ -18,25 +19,25 @@ public class VendaAppService : IVendaAppService
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
-    public long Create(CreateVendaRequest createVendaRequest)
+    public long CadastrarVenda(CreateVendaRequest createVendaRequest)
     {
         var vendaMap = _mapper.Map<Venda>(createVendaRequest);
 
-        return _vendaService.Create(vendaMap);
+        return _vendaService.CadastrarVenda(vendaMap);
     }
 
-    public VendaResult GetById(long id)
+    public VendaResult BuscarVendaPorId(long id)
     {
-        var vendaFound = _vendaService.GetById(id) ??
+        var vendaFound = _vendaService.BuscarVendaPorId(id) ??
             throw new NotFoundException($"Venda para o Id: {id} não encontrada.");
-        
+
         return _mapper.Map<VendaResult>(vendaFound);
     }
 
-    public void Update(long id, UpdateVendaRequest updateVendaRequest)
+    public void AtualizarVenda(long id, UpdateVendaRequest updateVendaRequest)
     {
         var vendaMap = _mapper.Map<Venda>(updateVendaRequest);
 
-        _vendaService.Update(id, vendaMap);
+        _vendaService.AtualizarVenda(id, vendaMap);
     }
 }
