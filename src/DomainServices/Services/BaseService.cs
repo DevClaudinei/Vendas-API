@@ -2,7 +2,7 @@
 using Infraestructure.Data.Context;
 using System;
 
-namespace DomainServices;
+namespace DomainServices.Services;
 
 public abstract class BaseService
 {

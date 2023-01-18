@@ -6,7 +6,7 @@ using EntityFrameworkCore.UnitOfWork.Interfaces;
 using Infraestructure.Data.Context;
 using Microsoft.EntityFrameworkCore;
 
-namespace DomainServices;
+namespace DomainServices.Services;
 
 public class VendaService : BaseService, IVendaService
 {
@@ -15,7 +15,7 @@ public class VendaService : BaseService, IVendaService
         IRepositoryFactory<ApplicationDbContext> repositoryFactory
     ) : base(unitOfWork, repositoryFactory) { }
 
-    public long Create(Venda venda)
+    public long CadastrarVenda(Venda venda)
     {
         var unitOfWork = UnitOfWork.Repository<Venda>();
 
@@ -28,7 +28,7 @@ public class VendaService : BaseService, IVendaService
         return venda.Id;
     }
 
-    public Venda GetById(long id)
+    public Venda BuscarVendaPorId(long id)
     {
         var repository = RepositoryFactory.Repository<Venda>();
         var vendaFound = repository.SingleResultQuery()
@@ -39,15 +39,13 @@ public class VendaService : BaseService, IVendaService
         return repository.FirstOrDefault(vendaFound);
     }
 
-    public void Update(long id, Venda venda)
+    public void AtualizarVenda(long id, Venda venda)
     {
         var unitOfWork = UnitOfWork.Repository<Venda>();
 
         VerificacaoDeStatus(venda.Status);
 
-        var vendaEncontrada = GetById(id);
-
-        if (vendaEncontrada is null)
+        var vendaEncontrada = BuscarVendaPorId(id) ??
             throw new NotFoundException($"Venda para o Id: {id} não encontrada.");
 
         TransicaoDeStatus(vendaEncontrada.Status, venda.Status);
