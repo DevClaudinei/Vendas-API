@@ -1,5 +1,5 @@
 ﻿using Application.Models;
-using AppServices;
+using AppServices.Services.Interfaces;
 using DomainServices.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,8 +21,8 @@ public class PaymentsController : ControllerBase
     {
         try
         {
-            var createdCustomer = _vendaAppService.Create(vendaRequest);
-            return Created("~https://localhost:7145/api/Payments", createdCustomer);
+            var vendaId = _vendaAppService.CadastrarVenda(vendaRequest);
+            return Created("~https://localhost:7145/api/Payments", vendaId);
         }
         catch (BadRequestException e)
         {
@@ -35,8 +35,8 @@ public class PaymentsController : ControllerBase
     {
         try
         {
-            var customerFoundId = _vendaAppService.GetById(id);
-            return Ok(customerFoundId);
+            var vendaEncontrada = _vendaAppService.BuscarVendaPorId(id);
+            return Ok(vendaEncontrada);
         }
         catch (NotFoundException e)
         {
@@ -49,7 +49,7 @@ public class PaymentsController : ControllerBase
     {
         try
         {
-            _vendaAppService.Update(id, updateVendaRequest);
+            _vendaAppService.AtualizarVenda(id, updateVendaRequest);
             return Ok();
         }
         catch (NotFoundException e)
