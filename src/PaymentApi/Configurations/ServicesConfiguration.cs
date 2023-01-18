@@ -1,6 +1,7 @@
-﻿using AppServices;
-using DomainServices;
+﻿using AppServices.Services;
+using AppServices.Services.Interfaces;
 using DomainServices.Interfaces;
+using DomainServices.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace PaymentApi.Configurations;
