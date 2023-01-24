@@ -16,6 +16,7 @@ public static class VendedorFixture
 			.Generate();
 
         vendedorFake.Telefone = "(11) 98354-2892";
+		vendedorFake.Id = 1L;
 
 		return vendedorFake;
     }

@@ -21,7 +21,7 @@ public static class VendaFixture
 				itens: new Faker<Item>()
 					.CustomInstantiator(x => new Item(
 						name: x.Commerce.ProductName())).Generate(1),
-				status: x.PickRandom<Status>()))
+				status: Status.AguardandoPagamento))
             .Generate();
 	}
 
