@@ -11,13 +11,13 @@ using UnitTests.Fixtures;
 
 namespace UnitTests.AppServices.Services;
 
-public class VendaServiceTests
+public class VendaAppServiceTests
 {
     private readonly IMapper _mapper;
     private readonly Mock<IVendaService> _vendaServiceMock;
     private readonly VendaAppService _vendaAppSevice;
 
-    public VendaServiceTests()
+    public VendaAppServiceTests()
     {
         var config = new MapperConfiguration(opt =>
         {
@@ -59,6 +59,7 @@ public class VendaServiceTests
 
         // Assert
         venda.IdVenda.Should().Be(vendaFake.Id);
+
         _vendaServiceMock.Verify(x => x.BuscarVendaPorId(It.IsAny<long>()), Times.Once);
     }
 
