@@ -33,8 +33,7 @@ public class VendaService : BaseService, IVendaService
         var repository = RepositoryFactory.Repository<Venda>();
         var vendaFound = repository.SingleResultQuery()
             .AndFilter(x => x.Id.Equals(id))
-            .Include(x => x.Include(x => x.Vendedor))
-            .Include(x => x.Include(x => x.Itens));
+            .Include(x => x.Include(x => x.Vendedor), x => x.Include(x => x.Itens));
 
         return repository.FirstOrDefault(vendaFound);
     }
@@ -42,8 +41,6 @@ public class VendaService : BaseService, IVendaService
     public void AtualizarVenda(long id, Venda venda)
     {
         var unitOfWork = UnitOfWork.Repository<Venda>();
-
-        VerificacaoDeStatus(venda.Status);
 
         var vendaEncontrada = BuscarVendaPorId(id) ??
             throw new NotFoundException($"Venda para o Id: {id} não encontrada.");
@@ -56,30 +53,26 @@ public class VendaService : BaseService, IVendaService
         UnitOfWork.SaveChanges();
     }
 
-    private void VerificacaoDeStatus(Status status)
+    private void TransicaoDeStatus(Status statusDaVenda, Status atualizacaoStatus)
     {
-        if (status is Status.Entregue || status is Status.Cancelada)
-            throw new BadRequestException($"O status da venda não pode ser atualizado, pois esta venda está com status: {status}.");
-    }
-
-    private void TransicaoDeStatus(Status status, Status atualizacaoStatus)
-    {
-        switch (status)
+        switch (statusDaVenda)
         {
             case Status.AguardandoPagamento:
-                if (atualizacaoStatus != Status.AguardandoPagamento || atualizacaoStatus != Status.Cancelada)
-                    throw new BadRequestException($"O status: {status} não pode ser atualizado para o status: {atualizacaoStatus}.");
+                if (!(atualizacaoStatus == Status.PagamentoAprovado || atualizacaoStatus == Status.Cancelada))
+                    throw new BadRequestException($"O status: {statusDaVenda} não pode ser atualizado para o status: {atualizacaoStatus}.");
                 break;
             case Status.PagamentoAprovado:
-                if (atualizacaoStatus != Status.EnviadoParaTransportadora || atualizacaoStatus != Status.Cancelada)
-                    throw new BadRequestException($"O status: {status} não pode ser atualizado para o status: {atualizacaoStatus}.");
+                if (!(atualizacaoStatus == Status.EnviadoParaTransportadora || atualizacaoStatus == Status.Cancelada))
+                    throw new BadRequestException($"O status: {statusDaVenda} não pode ser atualizado para o status: {atualizacaoStatus}.");
                 break;
             case Status.EnviadoParaTransportadora:
                 if (atualizacaoStatus != Status.Entregue)
-                    throw new BadRequestException($"O status: {status} não pode ser atualizado para o status: {atualizacaoStatus}.");
+                    throw new BadRequestException($"O status: {statusDaVenda} não pode ser atualizado para o status: {atualizacaoStatus}.");
                 break;
+            case Status.Entregue:
+                throw new BadRequestException($"O status da venda não pode ser atualizado, pois esta venda está com status: {statusDaVenda}.");
             default:
-                throw new BadRequestException($"Status: {status} não existe.");
+                throw new BadRequestException($"Status: {statusDaVenda} não existe.");
         }
     }
 }
