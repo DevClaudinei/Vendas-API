@@ -19,6 +19,8 @@ public class VendaService : BaseService, IVendaService
     {
         var unitOfWork = UnitOfWork.Repository<Venda>();
 
+        VerificaItensEmVenda(venda);
+
         if (venda.Status != Status.AguardandoPagamento)
             throw new BadRequestException($"Não é possível realizar uma compra com status: {venda.Status}.");
 
@@ -26,6 +28,15 @@ public class VendaService : BaseService, IVendaService
         UnitOfWork.SaveChanges();
 
         return venda.Id;
+    }
+
+    private void VerificaItensEmVenda(Venda venda)
+    {
+        foreach (var item in venda.Itens)
+        {
+            if (item.Name is null)
+                throw new BadRequestException($"Não é possível registrar a venda. Um nome de item não foi informado.");
+        }
     }
 
     public Venda BuscarVendaPorId(long id)
