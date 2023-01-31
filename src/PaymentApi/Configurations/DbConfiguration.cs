@@ -6,8 +6,16 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace PaymentApi.Configurations;
 
+/// <summary>
+/// Realiza configurações referentes ao uso de banco de dados MySql
+/// </summary>
 public static class DbConfiguration
 {
+    /// <summary>
+    /// Realiza a configuração do serviço de banco de dados e uso do pacote unit of work
+    /// </summary>
+    /// <param name="services"></param>
+    /// <param name="configuration"></param>
     public static void AddDbConfiguration(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<ApplicationDbContext>(options =>
