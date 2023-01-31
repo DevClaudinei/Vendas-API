@@ -1,5 +1,4 @@
-﻿using Application.Models;
-using AppServices.Services;
+﻿using AppServices.Services;
 using AutoMapper;
 using DomainModels.Entities;
 using DomainServices.Exceptions;
