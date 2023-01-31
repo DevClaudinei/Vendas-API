@@ -19,6 +19,6 @@ public class VendaResult
 
     public long IdVenda { get; set; }
     public DateTime DataVenda { get; set; }
-    public virtual ICollection<Item>? Itens { get; set; }
+    public virtual ICollection<Item> Itens { get; set; }
     public Status Status { get; set; }
 }
