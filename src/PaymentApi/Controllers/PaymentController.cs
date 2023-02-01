@@ -109,12 +109,12 @@ public class PaymentsController : ControllerBase
     ///
     /// </remarks>
     /// <response code="200">Atualiza o status da venda e salva no banco de dados</response>
-    /// <response code="400">Se o Id informado não corresponde a uma venda no banco de dados</response>
-    /// <response code="500">Se não for possível executar a transição de status por regra de negócio</response>
+    /// <response code="404">Se o Id informado não corresponde a uma venda no banco de dados</response>
+    /// <response code="400">Se não for possível executar a transição de status por regra de negócio</response>
     [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
     public IActionResult Put(long id, UpdateVendaRequest updateVendaRequest)
     {
         try
