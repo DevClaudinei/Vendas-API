@@ -4,7 +4,7 @@
 
 <p align="center">Analisar e desenvolver uma API de vendas</p>
 
-###Regras do desafio
+### Regras do desafio
 
 - Construir uma API REST utilizando .Net Core, Java ou NodeJs (com Typescript);
 - A API deve expor uma rota com documentação swagger (http://.../api-docs).
@@ -25,9 +25,17 @@
 - A API não precisa ter mecanismos de autenticação/autorização;
 - A aplicação não precisa implementar os mecanismos de persistência em um banco de dados, eles podem ser persistidos "em memória".
 
-## PONTOS QUE SERÃO AVALIADOS
-- Arquitetura da aplicação - embora não existam muitos requisitos de negócio, iremos avaliar como o projeto foi estruturada, bem como camadas e suas responsabilidades;
-- Programação orientada a objetos;
-- Boas práticas e princípios como SOLID, DDD (opcional), DRY, KISS;
-- Testes unitários;
-- Uso correto do padrão REST;
+## 🛠 Tecnologias
+
+As seguintes ferramentas foram usadas na construção do projeto:
+
+- [.NET](https://dotnet.microsoft.com/en-us/)
+- [MySQL]([https://sqlite.org/download.html](https://www.mysql.com/downloads/)
+- [AutoMapper](https://automapper.org/)
+- [FluentValidation](https://docs.fluentvalidation.net/en/latest/)
+- [UnitOfWork](https://www.nuget.org/packages/EntityFrameworkCore.Data.UnitOfWork)
+- [EntityFramework](https://learn.microsoft.com/pt-br/ef/)
+- [XUnit](https://xunit.net/)
+- [Moq](https://documentation.help/Moq/)
+- [Bogus](https://github.com/bchavez/Bogus)
+- [Fluent Assertions](https://fluentassertions.com/)
